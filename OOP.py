@@ -7,9 +7,9 @@ class Student:
         self.courses_in_progress = []
         self.grades_rev = {}
 
-    '''Оценка лектору от студента'''
 
     def rate_lec(self, lecturer, course, grade):
+        '''Оценка лектору от студента'''
         if isinstance(lecturer, Lecturer) and course in lecturer.courses_attached:
             if course in lecturer.grades_stud:
                 lecturer.grades_stud[course] += [grade]
@@ -18,14 +18,17 @@ class Student:
         else:
             print('Ошибка')
 
-    '''Средняя оценка студента'''
+
+
 
     def average(self):
+        '''Средняя оценка студента'''
         for k, v in self.grades_rev.items():
             return int(sum(v) / len(v))
 
 
     def __str__(self):
+        '''Перезапись магического метода'''
         return f'Имя: {self.name} \nФамилия: {self.surname} \nСредняя оценка за домашние задания: {self.average()} \nКурсы в процессе изучения: {self.courses_in_progress} \nЗавершенные курсы: Введение в программирование'
 
 
@@ -54,13 +57,14 @@ class Lecturer(Mentor):
         self.grades_stud = {}
         self.courses_attached = []
 
-    '''Средняя оценка за лекции'''
+
 
     def average(self):
+        '''Средняя оценка за лекции'''
         for k, v in self.grades_stud.items():
             return int(sum(v) / len(v))
 
-    '''Магический метод'''
+
 
     def __str__(self):
         return f'Имя: {self.name} \nФамилия: {self.surname} \nСредняя оценка за лекции: {self.average()}'
@@ -72,6 +76,7 @@ class Lecturer(Mentor):
         return self.average() < other.average()
 
     def comparison_text(self, other):
+        '''Текстовой вывод def__lt__'''
         if self.__lt__(other) is True:
             print(f'Средняя оценка {self.name} меньше {other.name}')
             return
@@ -86,9 +91,10 @@ class Reviewer(Mentor):
         super().__init__(name, surname)
         self.courses_attached = []
 
-    '''Оценка студенту за ДЗ'''
+
 
     def rate_hw(self, student, course, grade):
+        '''Оценка студенту за ДЗ'''
         if isinstance(student, Student) and course in self.courses_attached and course in student.courses_in_progress:
             if course in student.grades_rev:
                 student.grades_rev[course] += [grade]
